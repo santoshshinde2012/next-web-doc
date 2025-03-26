@@ -1,0 +1,280 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: A sample API to demonstrate OpenAPI specification rendering with Redoc (V2 with new features)
+  version: 2.0.0
+  contact:
+    email: support@example.com
+servers:
+  - url: https://api.example.com/v2
+    description: Production server (V2)
+  - url: https://staging-api.example.com/v2
+    description: Staging server (V2)
+tags:
+  - name: users
+    description: Operations about users
+  - name: products
+    description: Operations about products
+  - name: orders
+    description: Operations about orders (New in V2)
+paths:
+  /users:
+    get:
+      summary: Get all users
+      description: Returns a list of users
+      operationId: getUsers
+      tags:
+        - users
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of users to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+        - name: page
+          in: query
+          description: Page number for pagination (New in V2)
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+    post:
+      summary: Create a user
+      description: Creates a new user
+      operationId: createUser
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User created successfully
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      description: Returns a single user
+      operationId: getUserById
+      tags:
+        - users
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+  /products:
+    get:
+      summary: Get all products
+      description: Returns a list of products
+      operationId: getProducts
+      tags:
+        - products
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /orders:
+    get:
+      summary: Get all orders
+      description: Returns a list of orders (New in V2)
+      operationId: getOrders
+      tags:
+        - orders
+      parameters:
+        - name: status
+          in: query
+          description: Filter orders by status
+          required: false
+          schema:
+            type: string
+            enum: [pending, processing, shipped, delivered, canceled]
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        name:
+          type: string
+          example: "Jane Doe"
+        email:
+          type: string
+          format: email
+          example: "jane.doe@example.com"
+        status:
+          type: string
+          enum: [active, inactive, pending]
+          example: "active"
+        createdAt:
+          type: string
+          format: date-time
+        phone:
+          type: string
+          example: "+1234567890"
+          description: "Phone number (New in V2)"
+      required:
+        - id
+        - name
+        - email
+        - status
+    UserInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Jane Doe"
+        email:
+          type: string
+          format: email
+          example: "jane.doe@example.com"
+        phone:
+          type: string
+          example: "+1234567890"
+          description: "Phone number (New in V2)"
+      required:
+        - name
+        - email
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        name:
+          type: string
+          example: "Smartphone XYZ"
+        price:
+          type: number
+          format: float
+          example: 599.99
+        category:
+          type: string
+          example: "Electronics"
+        inStock:
+          type: boolean
+          example: true
+        discount:
+          type: number
+          format: float
+          example: 10.5
+          description: "Discount percentage (New in V2)"
+      required:
+        - id
+        - name
+        - price
+        - category
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "a180f1ee-7c24-4b01-90e6-d701748f9753"
+        userId:
+          type: string
+          format: uuid
+          example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+                format: uuid
+              quantity:
+                type: integer
+              price:
+                type: number
+        totalAmount:
+          type: number
+          format: float
+          example: 1299.98
+        status:
+          type: string
+          enum: [pending, processing, shipped, delivered, canceled]
+          example: "processing"
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - products
+        - totalAmount
+        - status
+    Pagination:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+          example: 1
+        totalPages:
+          type: integer
+          example: 5
+        totalItems:
+          type: integer
+          example: 100
+        itemsPerPage:
+          type: integer
+          example: 20
