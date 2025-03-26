@@ -4,9 +4,9 @@ import localFont from 'next/font/local'
 import clsx from 'clsx'
 
 import { Providers } from '@/app/providers'
-import { Layout } from '@/components/Layout'
 
 import '@/styles/tailwind.css'
+import PathBasedLayout from './PathBasedLayout'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -43,7 +43,9 @@ export default function RootLayout({
     >
       <body className="flex min-h-full bg-white dark:bg-slate-900">
         <Providers>
-          <Layout>{children}</Layout>
+          <PathBasedLayout specialPaths={['/api-docs']}>
+            {children}
+          </PathBasedLayout>
         </Providers>
       </body>
     </html>
