@@ -33,12 +33,10 @@
     "react-highlight-words": "^0.20.0",
     "redoc": "^2.4.0",
     "simple-functional-loader": "^1.2.1",
-    "swagger-ui-react": "^5.20.1",
     "tailwindcss": "^4.0.15",
     "typescript": "^5.8.2"
   },
   "devDependencies": {
-    "@types/swagger-ui-react": "^5.18.0",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.26",
     "prettier": "^3.5.3",

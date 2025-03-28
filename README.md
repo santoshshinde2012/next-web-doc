@@ -1,6 +1,6 @@
-# Syntax
+# Next Web Docs Template
 
-Syntax is a [Tailwind Plus](https://tailwindcss.com/plus) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
+A modern documentation website template built with Next.js, featuring Markdoc content, interactive API documentation, global search, and dark/light theme support.
 
 ## Getting started
 
@@ -22,11 +22,36 @@ Finally, open [http://localhost:3000](http://localhost:3000) in your browser to 
 
 You can start editing this template by modifying the files in the `/src` folder. The site will auto-update as you edit these files.
 
-## Global search
+### Content Structure
+
+- Documentation pages are created as Markdown files in the `/src/app` directory
+- API documentation is powered by OpenAPI specifications in the `/public/api` folder
+- The main layout and styling can be customized in the `/src/components` directory
+
+## Features
+
+### Global search
 
 This template includes a global search that's powered by the [FlexSearch](https://github.com/nextapps-de/flexsearch) library. It's available by clicking the search input or by using the `⌘K` shortcut.
 
 This feature requires no configuration, and works out of the box by automatically scanning your documentation pages to build its index. You can adjust the search parameters by editing the `/src/markdoc/search.mjs` file.
+
+### API Documentation
+
+The template includes interactive API documentation with the following features:
+
+- Built with [Redoc](https://github.com/Redocly/redoc) for beautiful documentation rendering
+- [Swagger UI](https://swagger.io/tools/swagger-ui/) integration for API testing
+- Support for multiple API versions with an easy-to-use version selector
+- Toggle between "Documentation" and "Try API" modes
+
+To customize the API documentation:
+1. Update the OpenAPI specifications in `/public/api` directory
+2. Modify the API versions in `/src/app/api-docs/page.tsx`
+
+### Theme Support
+
+The template includes both light and dark theme support using the next-themes library, with automatic detection of system preferences.
 
 ## License
 
@@ -36,9 +61,11 @@ This site template is a commercial product and is licensed under the [Tailwind P
 
 To learn more about the technologies used in this site template, see the following resources:
 
-- [Tailwind CSS](https://tailwindcss.com/docs) - the official Tailwind CSS documentation
-- [Next.js](https://nextjs.org/docs) - the official Next.js documentation
-- [Headless UI](https://headlessui.dev) - the official Headless UI documentation
-- [Markdoc](https://markdoc.io) - the official Markdoc documentation
-- [Algolia Autocomplete](https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/) - the official Algolia Autocomplete documentation
-- [FlexSearch](https://github.com/nextapps-de/flexsearch) - the official FlexSearch documentation
+- [Next.js](https://nextjs.org/docs) - The React framework for production
+- [Markdoc](https://markdoc.io) - Powerful, flexible markdown authoring
+- [Tailwind CSS](https://tailwindcss.com/docs) - Utility-first CSS framework
+- [Headless UI](https://headlessui.dev) - Unstyled, accessible UI components
+- [FlexSearch](https://github.com/nextapps-de/flexsearch) - Next-generation full-text search library
+- [Redoc](https://github.com/Redocly/redoc) - OpenAPI documentation generator
+- [Swagger UI](https://swagger.io/tools/swagger-ui/) - Interactive API documentation
+- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript at scale
